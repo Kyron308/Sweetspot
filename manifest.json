@@ -1,0 +1,23 @@
+{
+  "name": "Sweet Spot",
+  "short_name": "Sweet Spot",
+  "id": "./",
+  "start_url": "./#today",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f6f2e9",
+  "theme_color": "#f6f2e9",
+  "description": "A private iPhone-first personal balance companion that notices patterns and gives one useful daily nudge.",
+  "categories": ["lifestyle"],
+  "icons": [
+    {"src":"icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},
+    {"src":"icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"},
+    {"src":"icons/icon-maskable-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}
+  ],
+  "shortcuts": [
+    {"name":"Today","short_name":"Today","url":"./#today","icons":[{"src":"icons/icon-192.png","sizes":"192x192"}]},
+    {"name":"Patterns","short_name":"Patterns","url":"./#patterns","icons":[{"src":"icons/icon-192.png","sizes":"192x192"}]},
+    {"name":"Life","short_name":"Life","url":"./#life","icons":[{"src":"icons/icon-192.png","sizes":"192x192"}]}
+  ]
+}

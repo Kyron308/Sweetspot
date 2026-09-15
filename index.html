@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <meta name="theme-color" content="#f6f2e9" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#101613" media="(prefers-color-scheme: dark)">
+  <meta name="description" content="Sweet Spot — a private iPhone-first personal balance companion.">
+  <meta name="application-name" content="Sweet Spot">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Sweet Spot">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>Sweet Spot</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <button class="brand-button" id="brandButton" type="button" aria-label="Go to Today">
+        <span class="brand-mark" aria-hidden="true">✦</span>
+        <span><strong>Sweet Spot</strong><small id="todayLabel"></small></span>
+      </button>
+      <button id="topSettingsBtn" class="icon-btn" type="button" aria-label="Open More">•••</button>
+    </header>
+
+    <div id="updateBanner" class="update-banner hidden" role="status">
+      <span><strong>Sweet Spot updated</strong><small>A newer version is ready.</small></span>
+      <button id="refreshAppBtn" type="button">Refresh</button>
+    </div>
+
+    <main class="content" id="mainContent">
+      <section class="view active" data-view="today" aria-labelledby="todayTitle">
+        <div class="home-hero">
+          <span class="kicker" id="greetingKicker">TODAY</span>
+          <h1 id="todayTitle">Good evening.</h1>
+          <p id="homeHeadline">Tell Sweet Spot how you feel and it’ll give you one useful nudge.</p>
+        </div>
+
+        <section class="card state-card" aria-labelledby="stateTitle">
+          <div class="section-heading compact">
+            <div>
+              <span class="kicker">RIGHT NOW</span>
+              <h2 id="stateTitle">How do you feel?</h2>
+            </div>
+            <span id="savedPill" class="saved-pill hidden">✓ Saved</span>
+          </div>
+          <div id="moodGrid" class="mood-grid"></div>
+          <div class="social-row" id="socialRow" aria-label="Social energy"></div>
+        </section>
+
+        <section class="card nudge-card" aria-labelledby="nudgeTitle">
+          <div class="nudge-icon" id="nudgeIcon">✦</div>
+          <div class="nudge-copy">
+            <span class="kicker">TODAY'S NUDGE</span>
+            <h2 id="nudgeTitle">Start with how you feel.</h2>
+            <p id="nudgeReason">Sweet Spot will use your check-ins and patterns to suggest one small adjustment.</p>
+          </div>
+          <div class="button-row two">
+            <button id="ideaBtn" class="secondary-btn" type="button">Give me an idea</button>
+            <button id="useNudgeBtn" class="primary-btn" type="button">Make this my one thing</button>
+          </div>
+        </section>
+
+        <section class="card one-thing-card" aria-labelledby="oneThingTitle">
+          <div class="section-heading compact">
+            <div><span class="kicker">ONE THING</span><h2 id="oneThingTitle">What makes today a win?</h2></div>
+          </div>
+          <div class="inline-save">
+            <input id="todayOneThing" type="text" maxlength="120" placeholder="Keep it small and specific">
+            <button id="saveOneThingBtn" class="square-btn" type="button" aria-label="Save one thing">✓</button>
+          </div>
+        </section>
+
+        <section id="lookForwardCard" class="card look-forward-card" aria-labelledby="lookForwardTitle">
+          <div class="section-heading compact">
+            <div><span class="kicker">LOOKING FORWARD TO</span><h2 id="lookForwardTitle">Add something future-you wants.</h2></div>
+            <button class="text-btn" id="openLifeBtn" type="button">Life →</button>
+          </div>
+          <div id="nextAdventure"></div>
+        </section>
+
+        <details class="card deeper-card" id="deeperCheckin">
+          <summary>
+            <span><span class="kicker">DEEPER CHECK-IN</span><strong>Four signals</strong></span>
+            <span id="deepCompletion">0/4</span>
+          </summary>
+          <div id="balanceGrid" class="balance-grid"></div>
+          <div class="section-heading compact top-gap"><div><span class="kicker">WHAT HELPED</span><h2>Anything good today?</h2></div></div>
+          <div id="boosterChips" class="chips"></div>
+          <label class="field-label" for="dailyNote">One note</label>
+          <textarea id="dailyNote" rows="3" maxlength="500" placeholder="Anything worth getting out of your head..."></textarea>
+        </details>
+
+        <button id="saveTodayBtn" class="primary-btn full sticky-action" type="button">Save today</button>
+      </section>
+
+      <section class="view" data-view="patterns" aria-labelledby="patternsTitle">
+        <div class="hero-copy">
+          <span class="kicker">PATTERNS</span>
+          <h1 id="patternsTitle">What your days are telling you.</h1>
+          <p>No grades. Just repeated clues about what tends to help and what keeps drifting out of balance.</p>
+        </div>
+
+        <section class="card week-card" aria-labelledby="weekTitle">
+          <div class="section-heading"><div><span class="kicker">THIS WEEK</span><h2 id="weekTitle">Seven-day map</h2></div><span class="mini-note">Tap a day</span></div>
+          <div id="weekStrip" class="week-strip"></div>
+        </section>
+
+        <section class="card pattern-lead-card" aria-labelledby="leadPatternTitle">
+          <span class="kicker">WHAT I NOTICE</span>
+          <h2 id="leadPatternTitle">A few check-ins will reveal your first pattern.</h2>
+          <p id="leadPatternCopy">Sweet Spot looks for repeated low or high signals, consecutive days, your mood, and what seems to improve your better days.</p>
+        </section>
+
+        <div class="insight-grid">
+          <section class="mini-card"><span class="kicker">WHAT HELPS</span><strong id="helpInsight">Not enough data yet</strong><small id="helpInsightSub">Choose boosters during check-ins.</small></section>
+          <section class="mini-card"><span class="kicker">WEEKLY RHYTHM</span><strong id="weekdayInsight">Still learning</strong><small id="weekdayInsightSub">A few weeks will make this useful.</small></section>
+        </div>
+
+        <section class="card" aria-labelledby="signalTitle">
+          <div class="section-heading"><div><span class="kicker">LAST 14 DAYS</span><h2 id="signalTitle">Signal balance</h2></div></div>
+          <div id="signalRows" class="signal-rows"></div>
+        </section>
+
+        <section class="card" aria-labelledby="historyTitle">
+          <div class="section-heading"><div><span class="kicker">HISTORY</span><h2 id="historyTitle">Recent check-ins</h2></div><button id="historyToggle" class="small-btn" type="button">30 days</button></div>
+          <div id="historyList" class="history-list"></div>
+        </section>
+      </section>
+
+      <section class="view" data-view="life" aria-labelledby="lifeTitle">
+        <div class="hero-copy">
+          <span class="kicker">LIFE</span>
+          <h1 id="lifeTitle">Keep the bigger picture visible.</h1>
+          <p>Enough direction to stop everyday life crowding out the things you actually want.</p>
+        </div>
+
+        <section class="card focus-card" aria-labelledby="focusTitle">
+          <span class="kicker">RIGHT NOW</span>
+          <h2 id="focusTitle">What matters most?</h2>
+          <textarea id="lifeFocus" rows="3" maxlength="300" placeholder="A goal, decision, trip, relationship, home plan, or anything you don’t want to lose sight of..."></textarea>
+          <div class="row-end"><button id="saveFocusBtn" class="secondary-btn" type="button">Save focus</button></div>
+        </section>
+
+        <section class="card" aria-labelledby="adventureTitle">
+          <div class="section-heading"><div><span class="kicker">ANTICIPATION</span><h2 id="adventureTitle">Things to look forward to</h2></div><button id="surpriseAdventureBtn" class="small-btn" type="button">Suggest one</button></div>
+          <div class="adventure-form">
+            <input id="adventureInput" type="text" maxlength="120" placeholder="Camping weekend, dinner out, trip, fishing day...">
+            <input id="adventureDate" type="date" aria-label="Adventure date">
+            <select id="adventureType" aria-label="Adventure type">
+              <option value="Adventure">Adventure</option>
+              <option value="Trip">Trip</option>
+              <option value="Social">Social</option>
+              <option value="Food">Food</option>
+              <option value="Outdoors">Outdoors</option>
+              <option value="Other">Other</option>
+            </select>
+            <button id="addAdventureBtn" class="primary-btn" type="button">Add</button>
+          </div>
+          <div id="adventureList" class="adventure-list"></div>
+        </section>
+
+        <section class="card" aria-labelledby="pillarsTitle">
+          <div class="section-heading"><div><span class="kicker">YOUR PILLARS</span><h2 id="pillarsTitle">How are they feeling?</h2></div><span class="mini-note">Tap to change</span></div>
+          <div id="pillarList" class="pillar-list"></div>
+        </section>
+      </section>
+
+      <section class="view" data-view="more" aria-labelledby="moreTitle">
+        <div class="hero-copy">
+          <span class="kicker">MORE</span>
+          <h1 id="moreTitle">Useful extras, not clutter.</h1>
+          <p>Smart meals, appearance, backups, installation and app updates.</p>
+        </div>
+
+        <section class="card meal-card" aria-labelledby="mealTitle">
+          <div class="section-heading"><div><span class="kicker">FOOD RHYTHM</span><h2 id="mealTitle">What should I eat?</h2></div><span id="mealCount" class="mini-note"></span></div>
+          <div class="energy-control" id="energyControl"></div>
+          <div id="mealResult" class="meal-result"><span>Choose your energy, then let Sweet Spot decide.</span></div>
+          <div class="button-row two"><button id="pickMealBtn" class="primary-btn" type="button">Pick for me</button><button id="rerollMealBtn" class="secondary-btn" type="button">Again</button></div>
+          <details class="meal-manager">
+            <summary>Manage meal bank</summary>
+            <div id="mealList" class="meal-list"></div>
+            <div class="meal-add-grid">
+              <input id="mealInput" type="text" maxlength="80" placeholder="Add a meal">
+              <div id="mealTagPicker" class="tag-picker"></div>
+              <button id="addMealBtn" class="secondary-btn full" type="button">Add meal</button>
+            </div>
+          </details>
+        </section>
+
+        <section class="card" aria-labelledby="themeTitle">
+          <div class="section-heading compact"><div><span class="kicker">APPEARANCE</span><h2 id="themeTitle">Theme</h2></div></div>
+          <div id="themeControl" class="theme-control"><button data-theme="system" type="button">System</button><button data-theme="light" type="button">Light</button><button data-theme="dark" type="button">Dark</button></div>
+        </section>
+
+        <section id="installCard" class="card install-card hidden" aria-labelledby="installTitle">
+          <span class="kicker">IPHONE</span><h2 id="installTitle">Add Sweet Spot to your Home Screen</h2>
+          <ol class="install-steps"><li>Open this page in Safari.</li><li>Tap the Share button.</li><li>Choose <strong>Add to Home Screen</strong>.</li><li>Open Sweet Spot from the new icon.</li></ol>
+        </section>
+
+        <section class="card" aria-labelledby="dataTitle">
+          <div class="section-heading compact"><div><span class="kicker">YOUR DATA</span><h2 id="dataTitle">Backup & restore</h2></div></div>
+          <p class="muted-copy">Your data stays on this device. Export a backup before changing phones or clearing Safari website data.</p>
+          <div class="stacked-actions"><button id="exportBtn" class="secondary-btn full" type="button">Export backup</button><label class="secondary-btn full file-label">Import backup<input id="importInput" type="file" accept="application/json,.json"></label></div>
+        </section>
+
+        <section class="card danger-zone"><span class="kicker">RESET</span><h2>Start fresh</h2><p class="muted-copy">Erase all Sweet Spot data on this device.</p><button id="resetBtn" class="danger-btn full" type="button">Erase all data</button></section>
+        <div class="version-note" id="versionLabel"></div>
+      </section>
+    </main>
+
+    <nav class="tabbar" aria-label="Main navigation">
+      <button class="tab active" data-target="today" type="button"><span class="tab-icon">☀︎</span><span>Today</span></button>
+      <button class="tab" data-target="patterns" type="button"><span class="tab-icon">⌁</span><span>Patterns</span></button>
+      <button class="tab" data-target="life" type="button"><span class="tab-icon">⌂</span><span>Life</span></button>
+      <button class="tab" data-target="more" type="button"><span class="tab-icon">•••</span><span>More</span></button>
+    </nav>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <dialog id="dayDialog" class="sheet-dialog">
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="section-heading"><div><span class="kicker">CHECK-IN</span><h2 id="dialogDate"></h2></div><button id="closeDayDialog" class="icon-btn" type="button" aria-label="Close">×</button></div>
+      <div id="dialogSummary" class="dialog-summary"></div>
+      <button id="deleteDayBtn" class="danger-btn full" type="button">Delete this check-in</button>
+    </div>
+  </dialog>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
